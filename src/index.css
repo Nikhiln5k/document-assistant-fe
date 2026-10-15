@@ -1,13 +1,403 @@
+/*
+ * Global styles for Document Assistant.
+ * Loaded after Bootstrap, so everything here can refine Bootstrap's defaults.
+ * Prefer the tokens below over hard-coded values in component styles.
+ */
+
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-active: #3730a3;
+  --color-primary-soft: #eef2ff;
+  --color-on-primary: #ffffff;
+  --color-accent: #06b6d4;
+
+  /* Surfaces and text */
+  --color-bg: #f5f6fb;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef0f6;
+  --color-border: #e2e5ee;
+  --color-border-strong: #cdd2df;
+  --color-heading: #111426;
+  --color-text: #2b2f45;
+  --color-text-muted: #6a7087;
+
+  /* Feedback */
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fef2f2;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: clamp(1.625rem, 1.4rem + 0.8vw, 2rem);
+  --font-size-3xl: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+
+  /* Spacing scale (4px steps) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* Depth */
+  --shadow-sm: 0 1px 2px rgb(17 20 38 / 0.06), 0 1px 3px rgb(17 20 38 / 0.08);
+  --shadow-md: 0 4px 12px rgb(17 20 38 / 0.08);
+  --shadow-lg: 0 12px 40px rgb(17 20 38 / 0.1);
+  --focus-ring: 0 0 0 4px rgb(79 70 229 / 0.2);
+
+  --transition: 150ms ease;
+
+  /* Bootstrap bridge: point Bootstrap's own variables at our tokens. */
+  --bs-primary: var(--color-primary);
+  --bs-primary-rgb: 79, 70, 229;
+  --bs-body-font-family: var(--font-sans);
+  --bs-body-font-size: var(--font-size-base);
+  --bs-body-line-height: 1.6;
+  --bs-body-color: var(--color-text);
+  --bs-body-bg: var(--color-bg);
+  --bs-heading-color: var(--color-heading);
+  --bs-secondary-color: var(--color-text-muted);
+  --bs-border-color: var(--color-border);
+  --bs-border-radius: var(--radius-md);
+  --bs-link-color: var(--color-primary);
+  --bs-link-color-rgb: 79, 70, 229;
+  --bs-link-hover-color: var(--color-primary-hover);
+  --bs-link-hover-color-rgb: 67, 56, 202;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #818cf8;
+    --color-primary-hover: #a5b4fc;
+    --color-primary-active: #c7d2fe;
+    --color-primary-soft: rgb(129 140 248 / 0.14);
+    --color-on-primary: #0e1020;
+
+    --color-bg: #0e1020;
+    --color-surface: #161a2e;
+    --color-surface-muted: #1f2440;
+    --color-border: #2a3050;
+    --color-border-strong: #3a4168;
+    --color-heading: #f3f4fb;
+    --color-text: #d4d7e6;
+    --color-text-muted: #9298b3;
+
+    --color-danger-soft: rgb(220 38 38 / 0.14);
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 12px 40px rgb(0 0 0 / 0.45);
+    --focus-ring: 0 0 0 4px rgb(129 140 248 / 0.3);
+
+    --bs-primary-rgb: 129, 140, 248;
+    --bs-link-color-rgb: 129, 140, 248;
+    --bs-link-hover-color-rgb: 165, 180, 252;
+
+    color-scheme: dark;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
+  min-height: 100svh;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+}
+
+a {
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+::selection {
+  color: #fff;
+  background: var(--color-primary);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Buttons
+   Use Bootstrap's .btn with one of: .btn-primary, .btn-outline, .btn-ghost
+   ========================================================================== */
+
+.btn {
+  --bs-btn-padding-x: var(--space-5);
+  --bs-btn-padding-y: 0.625rem;
+  --bs-btn-font-size: var(--font-size-sm);
+  --bs-btn-font-weight: 600;
+  --bs-btn-border-radius: var(--radius-sm);
+  --bs-btn-focus-box-shadow: var(--focus-ring);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-lg {
+  --bs-btn-padding-y: 0.8rem;
+  --bs-btn-font-size: var(--font-size-base);
+  --bs-btn-border-radius: var(--radius-md);
+}
+
+.btn-sm {
+  --bs-btn-padding-x: var(--space-3);
+  --bs-btn-padding-y: 0.375rem;
+  --bs-btn-font-size: var(--font-size-xs);
+}
+
+.btn-primary {
+  --bs-btn-color: var(--color-on-primary);
+  --bs-btn-bg: var(--color-primary);
+  --bs-btn-border-color: var(--color-primary);
+  --bs-btn-hover-color: var(--color-on-primary);
+  --bs-btn-hover-bg: var(--color-primary-hover);
+  --bs-btn-hover-border-color: var(--color-primary-hover);
+  --bs-btn-active-color: var(--color-on-primary);
+  --bs-btn-active-bg: var(--color-primary-active);
+  --bs-btn-active-border-color: var(--color-primary-active);
+  --bs-btn-disabled-color: var(--color-on-primary);
+  --bs-btn-disabled-bg: var(--color-primary);
+  --bs-btn-disabled-border-color: var(--color-primary);
+
+  box-shadow: 0 6px 16px -6px rgb(79 70 229 / 0.6);
+}
+
+.btn-outline {
+  --bs-btn-color: var(--color-heading);
+  --bs-btn-bg: var(--color-surface);
+  --bs-btn-border-color: var(--color-border-strong);
+  --bs-btn-hover-color: var(--color-heading);
+  --bs-btn-hover-bg: var(--color-surface-muted);
+  --bs-btn-hover-border-color: var(--color-border-strong);
+  --bs-btn-active-color: var(--color-heading);
+  --bs-btn-active-bg: var(--color-surface-muted);
+  --bs-btn-active-border-color: var(--color-border-strong);
+}
+
+.btn-ghost {
+  --bs-btn-color: var(--color-text-muted);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-hover-color: var(--color-heading);
+  --bs-btn-hover-bg: var(--color-surface-muted);
+  --bs-btn-active-color: var(--color-heading);
+  --bs-btn-active-bg: var(--color-surface-muted);
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.form-label {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.form-control {
+  min-height: 2.875rem;
+  padding: 0.625rem 0.875rem;
+  /* 16px stops iOS Safari from zooming in when an input is focused. */
+  font-size: var(--font-size-base);
+  color: var(--color-heading);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.form-control::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.75;
+}
+
+.form-control:focus {
+  color: var(--color-heading);
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.form-text {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Two fields side by side on wider screens, stacked on phones. */
+.form-row {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 576px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input .form-control {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  background: transparent;
+  transform: translateY(-50%);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.password-toggle:hover {
+  color: var(--color-heading);
+  background: var(--color-surface-muted);
+}
+
+/* ==========================================================================
+   Alerts
+   ========================================================================== */
+
+.alert {
+  --bs-alert-padding-x: var(--space-4);
+  --bs-alert-padding-y: var(--space-3);
+  --bs-alert-margin-bottom: 0;
+  --bs-alert-border-radius: var(--radius-sm);
+
+  font-size: var(--font-size-sm);
+}
+
+.alert-danger {
+  --bs-alert-color: var(--color-danger);
+  --bs-alert-bg: var(--color-danger-soft);
+  --bs-alert-border-color: rgb(220 38 38 / 0.25);
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+}
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.55rem;
+  border-radius: var(--radius-md);
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  box-shadow: var(--shadow-md);
+}
+
+.logo-inverse {
+  color: #fff;
+}
+
+.logo-inverse .logo-mark {
+  background: rgb(255 255 255 / 0.18);
+  box-shadow: none;
 }
