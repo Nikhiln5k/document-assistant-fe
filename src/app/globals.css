@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/*
+ * Theme tokens
+ * Light is the default. Dark applies when the OS prefers dark, unless
+ * <html data-theme="light"> forces light. <html data-theme="dark"> forces dark.
+ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --background: #f7f6fb;
+  --surface: rgb(255 255 255 / 0.9);
+  --surface-raised: rgb(124 58 237 / 0.1);
+  --input: rgb(17 24 39 / 0.03);
+
+  /* Text */
+  --foreground: #111827;
+  --foreground-secondary: #374151;
+  --muted: #6b7280;
+  --subtle: #9ca3af;
+  --placeholder: #9ca3af;
+
+  /* Borders */
+  --border: rgb(17 24 39 / 0.12);
+  --border-accent: rgb(168 85 247 / 0.25);
+
+  /* Brand */
+  --primary: #7c3aed;
+  --primary-to: #9333ea;
+  --primary-hover: #8b5cf6;
+  --primary-to-hover: #a855f7;
+  --primary-foreground: #ffffff;
+  --accent: #9333ea;
+  --accent-hover: #7e22ce;
+  --ring: #a855f7;
+
+  /* Decorative glows */
+  --glow-1: rgb(192 132 252 / 0.25);
+  --glow-2: rgb(167 139 250 / 0.25);
+
+  /* Shadows */
+  --shadow-card: 0 0 60px rgb(124 58 237 / 0.08);
+  --shadow-primary: 0 10px 15px -3px rgb(124 58 237 / 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: #080711;
+    --surface: rgb(17 16 29 / 0.9);
+    --surface-raised: rgb(147 51 234 / 0.15);
+    --input: rgb(255 255 255 / 0.04);
+
+    --foreground: #ffffff;
+    --foreground-secondary: #d1d5db;
+    --muted: #9ca3af;
+    --subtle: #6b7280;
+    --placeholder: #4b5563;
+
+    --border: rgb(255 255 255 / 0.1);
+    --border-accent: rgb(168 85 247 / 0.3);
+
+    --accent: #c084fc;
+    --accent-hover: #d8b4fe;
+
+    --glow-1: rgb(126 34 206 / 0.3);
+    --glow-2: rgb(124 58 237 / 0.3);
+
+    --shadow-card: 0 0 60px rgb(124 58 237 / 0.12);
+    --shadow-primary: 0 10px 15px -3px rgb(88 28 135 / 0.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #080711;
+  --surface: rgb(17 16 29 / 0.9);
+  --surface-raised: rgb(147 51 234 / 0.15);
+  --input: rgb(255 255 255 / 0.04);
+
+  --foreground: #ffffff;
+  --foreground-secondary: #d1d5db;
+  --muted: #9ca3af;
+  --subtle: #6b7280;
+  --placeholder: #4b5563;
+
+  --border: rgb(255 255 255 / 0.1);
+  --border-accent: rgb(168 85 247 / 0.3);
+
+  --accent: #c084fc;
+  --accent-hover: #d8b4fe;
+
+  --glow-1: rgb(126 34 206 / 0.3);
+  --glow-2: rgb(124 58 237 / 0.3);
+
+  --shadow-card: 0 0 60px rgb(124 58 237 / 0.12);
+  --shadow-primary: 0 10px 15px -3px rgb(88 28 135 / 0.3);
+}
+
+/* Exposes the tokens as Tailwind utilities, e.g. bg-surface, text-muted, rounded-card */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-input: var(--input);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-placeholder: var(--placeholder);
+  --color-border: var(--border);
+  --color-border-accent: var(--border-accent);
+  --color-primary: var(--primary);
+  --color-primary-to: var(--primary-to);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-to-hover: var(--primary-to-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-ring: var(--ring);
+  --color-glow-1: var(--glow-1);
+  --color-glow-2: var(--glow-2);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-primary: var(--shadow-primary);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Type scale, radii and sizes (same in both themes) */
+@theme {
+  --text-brand: 2rem;
+  --text-brand--line-height: 2.5rem;
+  --text-brand--letter-spacing: -0.03em;
+  --text-brand--font-weight: 800;
+  --text-heading: 1.5rem;
+  --text-heading--line-height: 2rem;
+  --text-heading--letter-spacing: -0.025em;
+  --text-heading--font-weight: 700;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.25rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+
+  --radius-control: 0.75rem;
+  --radius-card: 1rem;
+
+  --spacing-control: 3rem;
+  --spacing-logo: 4rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}

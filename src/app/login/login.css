@@ -1,0 +1,65 @@
+@reference "../globals.css";
+
+/* Shared by /login and /register */
+
+.login-page {
+  @apply relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10 text-foreground;
+}
+
+.login-glow {
+  @apply pointer-events-none absolute h-96 w-96 rounded-full blur-[120px];
+}
+
+.login-glow-top {
+  @apply -left-40 -top-40 bg-glow-1;
+}
+
+.login-glow-bottom {
+  @apply -bottom-40 -right-40 bg-glow-2;
+}
+
+.login-card {
+  @apply relative w-full max-w-md rounded-card border border-border-accent bg-surface p-8 shadow-card backdrop-blur-xl sm:p-10;
+}
+
+/* Brand: logo + Documind + tagline */
+.login-brand {
+  @apply mb-8 flex flex-col items-center text-center;
+}
+
+.login-logo {
+  @apply relative mb-4 flex size-logo items-center justify-center rounded-card bg-surface-raised text-accent ring-1 ring-border-accent;
+}
+
+.login-logo-sparkle {
+  @apply absolute right-2.5 top-2.5;
+}
+
+.login-brand-name {
+  @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-brand text-transparent;
+}
+
+.login-brand-tagline {
+  @apply mt-1 text-caption text-muted;
+}
+
+/* Page heading */
+.login-heading {
+  @apply mb-8 border-t border-border pt-8 text-center;
+}
+
+.login-title {
+  @apply text-heading text-foreground;
+}
+
+.login-subtitle {
+  @apply mt-2 text-body text-muted;
+}
+
+.login-register {
+  @apply mt-8 text-center text-body text-muted;
+}
+
+.login-register-link {
+  @apply font-semibold text-accent transition hover:text-accent-hover;
+}

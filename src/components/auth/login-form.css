@@ -1,0 +1,50 @@
+@reference "../../app/globals.css";
+
+.login-form {
+  @apply space-y-5;
+}
+
+.login-label {
+  @apply mb-2 block text-body font-medium text-foreground-secondary;
+}
+
+.login-field {
+  @apply flex items-center gap-3 rounded-control border border-border bg-input px-4 transition focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20;
+}
+
+.login-field-icon {
+  @apply shrink-0 text-subtle transition;
+}
+
+.login-field:focus-within .login-field-icon {
+  @apply text-accent;
+}
+
+.login-input {
+  @apply h-control w-full bg-transparent text-body text-foreground outline-none placeholder:text-placeholder;
+}
+
+.login-toggle-password {
+  @apply text-subtle transition hover:text-accent;
+}
+
+.login-forgot {
+  @apply flex justify-end;
+}
+
+.login-forgot-link {
+  @apply text-body text-accent transition hover:text-accent-hover;
+}
+
+.login-submit {
+  @apply flex h-control w-full items-center justify-center gap-2 rounded-control bg-gradient-to-r from-primary to-primary-to font-semibold text-primary-foreground shadow-primary transition hover:from-primary-hover hover:to-primary-to-hover disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.login-submit-icon {
+  @apply transition-transform;
+}
+
+/* Replaces Tailwind's `group` / `group-hover:` pairing */
+.login-submit:hover .login-submit-icon {
+  @apply translate-x-1;
+}
