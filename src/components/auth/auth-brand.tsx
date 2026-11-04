@@ -12,7 +12,9 @@ export function AuthBrand() {
           alt="Documind"
           width={2172}
           height={724}
-          priority
+          // Matches .login-logo (w-56 / sm:w-64) so the browser fetches a ~256px variant, not the 2172px original
+          sizes="(min-width: 640px) 16rem, 14rem"
+          preload
           className="login-logo-image login-logo-dark"
         />
       </h1>
