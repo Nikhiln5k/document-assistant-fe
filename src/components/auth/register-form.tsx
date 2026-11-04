@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 
 type RegisterFormProps = Omit<ComponentProps<"form">, "onSubmit" | "children">;
 
+const MIN_PASSWORD_LENGTH = 8;
+
 export function RegisterForm({className, ...props}: RegisterFormProps) {
 
   const router = useRouter();
@@ -19,22 +21,39 @@ export function RegisterForm({className, ...props}: RegisterFormProps) {
     username: "",
     password: "",
   });
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage("");
     setIsLoading(true);
     try{
       if (!userFormData.firstName.trim() || !userFormData.lastName.trim() || !userFormData.username.trim() || !userFormData.password.trim()) {
-        return alert("Please fill in all fields.");
+        return setErrorMessage("Please fill in all fields.");
       }
-      const data = userFormData;
+      if (userFormData.password.length < MIN_PASSWORD_LENGTH) {
+        return setErrorMessage(`Password must be at least ${MIN_PASSWORD_LENGTH} characters.`);
+      }
+      if (userFormData.password !== confirmPassword) {
+        return setErrorMessage("Passwords don't match.");
+      }
+      const data = {
+        ...userFormData,
+        firstName: userFormData.firstName.trim(),
+        lastName: userFormData.lastName.trim(),
+        username: userFormData.username.trim(),
+      };
       const response = await register(data);
       if(response && response.statusCode !== 201) {
-        return alert("Registration failed. Please try again.");
+        return setErrorMessage("Registration failed. Please try again.");
       }
       router.push(ROUTES.DASHBOARD);
+    } catch (error) {
+      // ApiError already carries a user-friendly message (see services/api.ts).
+      setErrorMessage(error instanceof Error ? error.message : "Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -46,6 +65,12 @@ export function RegisterForm({className, ...props}: RegisterFormProps) {
       className={cn("login-form", className)}
       {...props}
     >
+      {errorMessage && (
+        <div className="login-error" role="alert">
+          {errorMessage}
+        </div>
+      )}
+
       {/* First Name */}
       <div>
         <label htmlFor="firstName" className="login-label">
@@ -135,6 +160,9 @@ export function RegisterForm({className, ...props}: RegisterFormProps) {
               setUserFormData({ ...userFormData, password: e.target.value })
             }
             autoComplete="new-password"
+            minLength={MIN_PASSWORD_LENGTH}
+            maxLength={128}
+            aria-describedby="password-hint"
             required
             className="login-input"
           />
@@ -147,6 +175,30 @@ export function RegisterForm({className, ...props}: RegisterFormProps) {
           >
             {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
           </button>
+        </div>
+        <p id="password-hint" className="login-hint">
+          Use at least {MIN_PASSWORD_LENGTH} characters.
+        </p>
+      </div>
+
+      {/* Confirm Password */}
+      <div>
+        <label htmlFor="confirmPassword" className="login-label">
+          Confirm Password
+        </label>
+
+        <div className="login-field">
+          <LockKeyhole size={19} className="login-field-icon" />
+          <input
+            id="confirmPassword"
+            type={showPassword ? "text" : "password"}
+            placeholder="Repeat your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+            className="login-input"
+          />
         </div>
       </div>
 

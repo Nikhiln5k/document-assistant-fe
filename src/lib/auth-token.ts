@@ -10,10 +10,12 @@ export function getToken(): string | null {
   return match ? decodeURIComponent(match.split("=")[1]) : null;
 }
 
-export function setToken(token: string): void {
+// expiresIn (seconds) comes from the backend; the cookie expires with the token, so the user is signed out when it does.
+export function setToken(token: string, expiresIn?: number): void {
   if (typeof document === "undefined") return;
   const secure = window.location.protocol === "https:" ? "; Secure" : "";
-  document.cookie = `${TOKEN_COOKIE}=${encodeURIComponent(token)}; Path=/; Max-Age=${TOKEN_MAX_AGE}; SameSite=Lax${secure}`;
+  const maxAge = expiresIn && expiresIn > 0 ? Math.floor(expiresIn) : TOKEN_MAX_AGE;
+  document.cookie = `${TOKEN_COOKIE}=${encodeURIComponent(token)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
 }
 
 export function clearToken(): void {

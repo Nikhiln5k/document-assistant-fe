@@ -6,13 +6,13 @@ import { get, post } from "./api";
 
 export async function login(data: LoginRequest): Promise<AuthResponse> {
   const response = await post<AuthResponse>(API_ENDPOINTS.login, data);
-  setToken(response?.data?.accessToken);
+  setToken(response?.data?.accessToken, response?.data?.expiresIn);
   return response;
 }
 
 export async function register(data: RegisterRequest): Promise<AuthResponse> {
   const response = await post<AuthResponse>(API_ENDPOINTS.register, data);
-  if (response?.data?.accessToken) setToken(response.data.accessToken);
+  if (response?.data?.accessToken) setToken(response.data.accessToken, response.data.expiresIn);
   return response;
 }
 

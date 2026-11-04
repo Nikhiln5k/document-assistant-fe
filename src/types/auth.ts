@@ -27,6 +27,8 @@ export interface AuthResponse {
   statusCode: number;
   data: {
     accessToken: string;
+    // Seconds until the access token expires.
+    expiresIn?: number;
     user: User;
   };
   message: string;

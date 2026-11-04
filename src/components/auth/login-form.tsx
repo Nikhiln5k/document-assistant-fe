@@ -11,6 +11,13 @@ import { useRouter } from "next/navigation";
 
 type LoginFormProps = Omit<ComponentProps<"form">, "onSubmit" | "children">;
 
+// proxy.ts adds ?from=<path> when it bounces a signed-out user to login.
+// Only same-site paths are allowed, so the param can't send users to another site.
+function getRedirectPath(): string {
+  const from = new URLSearchParams(window.location.search).get("from");
+  return from && /^\/(?![/\\])/.test(from) ? from : ROUTES.DASHBOARD;
+}
+
 export function LoginForm({ className, ...props }: LoginFormProps) {
 
   const router = useRouter();
@@ -19,23 +26,28 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!username.trim() || !password.trim()) return;
+    setErrorMessage("");
     setLoading(true);
 
     try {
       if (!username.trim() || !password.trim()) {
-        return alert("Please fill in all fields.");
+        return setErrorMessage("Please fill in all fields.");
       }
-      const data = {username, password};
+      const data = {username: username.trim(), password};
       const response = await login(data);
       if(response && response.statusCode !== 200) {
-        return alert("Login failed. Please try again.");
+        return setErrorMessage("Login failed. Please try again.");
       }
-      router.push(ROUTES.DASHBOARD);
+      router.push(getRedirectPath());
+    } catch (error) {
+      // ApiError already carries a user-friendly message (see services/api.ts).
+      setErrorMessage(error instanceof Error ? error.message : "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -43,6 +55,12 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className={cn("login-form", className)} {...props}>
+      {errorMessage && (
+        <div className="login-error" role="alert">
+          {errorMessage}
+        </div>
+      )}
+
       {/* Username */}
       <div>
         <label htmlFor="username" className="login-label">

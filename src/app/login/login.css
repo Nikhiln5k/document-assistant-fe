@@ -22,25 +22,44 @@
   @apply relative w-full max-w-md rounded-card border border-border-accent bg-surface p-8 shadow-card backdrop-blur-xl sm:p-10;
 }
 
-/* Brand: logo + Documind + tagline */
+/* Brand: Documind wordmark + tagline */
 .login-brand {
   @apply mb-8 flex flex-col items-center text-center;
 }
 
 .login-logo {
-  @apply relative mb-4 flex size-logo items-center justify-center rounded-card bg-surface-raised text-accent ring-1 ring-border-accent;
+  @apply w-56 sm:w-64;
 }
 
-.login-logo-sparkle {
-  @apply absolute right-2.5 top-2.5;
+.login-logo-image {
+  @apply h-auto w-full;
 }
 
-.login-brand-name {
-  @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-brand text-transparent;
+/* Show the logo variant that matches the active theme (same selectors as globals.css) */
+.login-logo-dark {
+  @apply hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .login-logo-light {
+    @apply hidden;
+  }
+
+  :root:not([data-theme="light"]) .login-logo-dark {
+    @apply block;
+  }
+}
+
+:root[data-theme="dark"] .login-logo-light {
+  @apply hidden;
+}
+
+:root[data-theme="dark"] .login-logo-dark {
+  @apply block;
 }
 
 .login-brand-tagline {
-  @apply mt-1 text-caption text-muted;
+  @apply mt-2 text-caption text-muted;
 }
 
 /* Page heading */
