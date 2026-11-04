@@ -1,0 +1,84 @@
+@reference "../globals.css";
+
+/* Shared by /login and /register */
+
+.login-page {
+  @apply relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-10 text-foreground;
+}
+
+.login-glow {
+  @apply pointer-events-none absolute h-96 w-96 rounded-full blur-[120px];
+}
+
+.login-glow-top {
+  @apply -left-40 -top-40 bg-glow-1;
+}
+
+.login-glow-bottom {
+  @apply -bottom-40 -right-40 bg-glow-2;
+}
+
+.login-card {
+  @apply relative w-full max-w-md rounded-card border border-border-accent bg-surface p-8 shadow-card backdrop-blur-xl sm:p-10;
+}
+
+/* Brand: Documind wordmark + tagline */
+.login-brand {
+  @apply mb-8 flex flex-col items-center text-center;
+}
+
+.login-logo {
+  @apply w-56 sm:w-64;
+}
+
+.login-logo-image {
+  @apply h-auto w-full;
+}
+
+/* Show the logo variant that matches the active theme (same selectors as globals.css) */
+.login-logo-dark {
+  @apply hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .login-logo-light {
+    @apply hidden;
+  }
+
+  :root:not([data-theme="light"]) .login-logo-dark {
+    @apply block;
+  }
+}
+
+:root[data-theme="dark"] .login-logo-light {
+  @apply hidden;
+}
+
+:root[data-theme="dark"] .login-logo-dark {
+  @apply block;
+}
+
+.login-brand-tagline {
+  @apply mt-2 text-caption text-muted;
+}
+
+/* Page heading */
+.login-heading {
+  @apply mb-8 border-t border-border pt-8 text-center;
+}
+
+.login-title {
+  @apply text-heading text-foreground;
+}
+
+.login-subtitle {
+  @apply mt-2 text-body text-muted;
+}
+
+.login-register {
+  @apply mt-8 text-center text-body text-muted;
+}
+
+.login-register-link {
+  @apply font-semibold text-accent transition hover:text-accent-hover;
+}
