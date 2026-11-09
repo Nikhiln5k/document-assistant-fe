@@ -1,5 +1,6 @@
 "use client"; // Needed for usePathname to highlight the active link
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FileText, LayoutGrid, Settings, Sparkles, type LucideIcon } from "lucide-react";
@@ -48,32 +49,48 @@ export function Sidebar() {
 }
 
 function NavSection({ title, links }: { title: string; links: NavItem[] }) {
-  const pathname = usePathname();
-
   return (
     <div>
       <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted">{title}</p>
-      <ul className="flex flex-col gap-1">
-        {links.map(({ label, href, icon: Icon }) => {
-          const isActive = pathname === href;
-          return (
-            <li key={href}>
-              <Link
-                href={href}
-                className={cn(
-                  "flex items-center gap-3 rounded-control px-3 py-2.5 text-body transition",
-                  isActive
-                    ? "bg-surface-raised font-semibold text-accent"
-                    : "text-foreground-secondary hover:bg-surface-raised hover:text-foreground"
-                )}
-              >
-                <Icon size={18} />
-                {label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+      {/* usePathname suspends on routes with unknown dynamic params (e.g. /documents/[id]),
+          so the fallback renders the same links without an active highlight. */}
+      <Suspense fallback={<NavLinks links={links} pathname={null} />}>
+        <ActiveNavLinks links={links} />
+      </Suspense>
     </div>
+  );
+}
+
+function ActiveNavLinks({ links }: { links: NavItem[] }) {
+  const pathname = usePathname();
+  return <NavLinks links={links} pathname={pathname} />;
+}
+
+function NavLinks({ links, pathname }: { links: NavItem[]; pathname: string | null }) {
+  return (
+    <ul className="flex flex-col gap-1">
+      {links.map(({ label, href, icon: Icon }) => {
+        // Nested pages (e.g. a single document) keep their section highlighted.
+        const isActive =
+          pathname !== null &&
+          (pathname === href || (href !== ROUTES.DASHBOARD && pathname.startsWith(`${href}/`)));
+        return (
+          <li key={href}>
+            <Link
+              href={href}
+              className={cn(
+                "flex items-center gap-3 rounded-control px-3 py-2.5 text-body transition",
+                isActive
+                  ? "bg-surface-raised font-semibold text-accent"
+                  : "text-foreground-secondary hover:bg-surface-raised hover:text-foreground"
+              )}
+            >
+              <Icon size={18} />
+              {label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
