@@ -1,7 +1,8 @@
 "use client"; // Needed for the sign-out click handler
 
+import { Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LogOut, Plus } from "lucide-react";
 import { logout } from "@/services/auth.service";
 import { ROUTES } from "@/constants/routes";
@@ -32,7 +33,11 @@ export function Header() {
   return (
     <header className="flex items-center justify-between gap-4 border-b border-border px-6 py-4">
       <div>
-        <h1 className="text-base font-semibold text-foreground">Home</h1>
+        {/* usePathname suspends on routes with unknown dynamic params (e.g. /documents/[id]);
+            the fallback keeps the heading's height so the layout doesn't shift. */}
+        <Suspense fallback={<h1 className="text-base font-semibold text-foreground">&nbsp;</h1>}>
+          <HeaderTitle />
+        </Suspense>
         <p className="min-h-4 text-xs text-muted">{today}</p>
       </div>
 
@@ -60,4 +65,10 @@ export function Header() {
       </div>
     </header>
   );
+}
+
+function HeaderTitle() {
+  const pathname = usePathname();
+  const title = pathname.startsWith(ROUTES.DOCUMENTS) ? "Documents" : "Home";
+  return <h1 className="text-base font-semibold text-foreground">{title}</h1>;
 }

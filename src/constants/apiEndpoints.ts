@@ -3,4 +3,6 @@ export const API_ENDPOINTS = {
   register: "api/auth/register",
   me: "api/auth/me",
   dashboardStats: "api/dashboard/stats",
+  documents: "api/document",
+  uploadDocument: "api/document/upload",
 }

@@ -37,6 +37,8 @@
 
   /* Status */
   --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
 
   /* Decorative glows */
   --glow-1: rgb(192 132 252 / 0.25);
@@ -69,6 +71,8 @@
     --accent-hover: #d8b4fe;
 
     --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
 
     --glow-1: rgb(126 34 206 / 0.3);
     --glow-2: rgb(124 58 237 / 0.3);
@@ -99,6 +103,8 @@
   --accent-hover: #d8b4fe;
 
   --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
 
   --glow-1: rgb(126 34 206 / 0.3);
   --glow-2: rgb(124 58 237 / 0.3);
@@ -129,6 +135,8 @@
   --color-accent-hover: var(--accent-hover);
   --color-ring: var(--ring);
   --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
   --color-glow-1: var(--glow-1);
   --color-glow-2: var(--glow-2);
 
